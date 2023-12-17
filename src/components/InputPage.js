@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, FormGroup, FormControl, ControlLabel, Label } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 
 
 export default function InputPage({formData,setFormData}){
@@ -26,24 +26,12 @@ export default function InputPage({formData,setFormData}){
     //calculate total monthly expenses
     let monthlyExpensesValue = monthlyRent + monthlyUtility + monthlyGroceries + monthlyVehicle + monthlySubscriptions + monthlyMisc + monthlyRetirementInvestment;
     //calculate savings until retirement
-    const dt1 = formData.dateOfBirth;
-    const dt2 = formData.dateOfRetirement;
+    const dt1 = new Date(formData.dateOfBirth);
+    const dt2 = new Date(formData.dateOfRetirement);
     const differenceInTime = dt2.getTime() - dt1.getTime();
-    const differenceInMonths = differenceInTime / (1000 * 3600 * 24 * 30.437);
-    let yearsUntilRetirementValue = Math.abs(differenceInMonths);
-    console.log(formData.dateOfBirth)
-    console.log(formData.dateOfRetirement)
-    console.log(yearsUntilRetirementValue)
-    const retirementSavingsValue = []
-    for(let i=1;i<=yearsUntilRetirementValue;i++){
-      let amountSaved = (monthlyRetirementInvestment*12/retirementROI)*(Math.pow(1+retirementROI,i)-1) //calculates the amount saved every year using FV of annuity formula
-      retirementSavingsValue.push({year: i, amountSaved});
-    }
-    //calculate student loans
-    let studentLoanPaymentsValue = 0 //change
-
-    setFormData( {retirementSavings: retirementSavingsValue} )
-    setFormData( {monthlyExpenses: monthlyExpensesValue} )
+    const differenceInYears = differenceInTime / (1000 * 3600 * 24 * 30.437 * 12);
+    let yearsUntilRetirementValue = Math.ceil(Math.abs(differenceInYears));
+    setFormData({yearsUntilRetirement: yearsUntilRetirementValue})
   }
   //handles the onchange of every form control
   const handleChange = (event) => {
@@ -129,9 +117,6 @@ export default function InputPage({formData,setFormData}){
           <Form.Label>Other Loan Interest (whole number%)</Form.Label>
           <Form.Control name="otherLoanInterest" value={formData.otherLoanInterest} type="number" placeholder="Enter Other Loan Interest" onChange={handleChange}/>
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
       </Form>
     </div>
   </div>
