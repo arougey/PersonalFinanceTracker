@@ -8,6 +8,7 @@ const MultiPageForm = () => {
     fullName: '',
     dateOfBirth: '',
     annualIncome:'',
+    moneyOnHand:'',
     taxRate: '',
     monthlyRent: '',
     monthlyUtility: '',
@@ -22,12 +23,7 @@ const MultiPageForm = () => {
     studentLoanInterest: '',
     otherLoanTotal: '',
     otherLoanInterest: '',
-
-    yearsUntilRetirement: 0,
-    monthlyExpenses: 0,
-    retirementSavings: [],
-    studentLoanPayments: 0,
-    otherLoanPayments: 0,
+    yearsUntilRetirement: '',
   });
 
   const pageComponents = [InputPage, OutputPage]; //list of all the pages
@@ -59,7 +55,7 @@ const MultiPageForm = () => {
       >
         <Button 
           variant="primary" type="submit" 
-          onClick={handlePrev} disabled={currentPage == 1} 
+          onClick={handlePrev} disabled={currentPage === 1} 
           //px-4 py-2 border rounded ${(currentPage === 1 || currentPage === 4 )? 'opacity-50 cursor-not-allowed hidden' : 'bg-gray-200 hover:bg-gray-300'}}}
           >
             Previous

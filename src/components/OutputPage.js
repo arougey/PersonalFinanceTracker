@@ -6,6 +6,7 @@ import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, XAxis, 
 export default function OutputPage({formData, setFormData}){
   //turn all strings into float values
   let annualIncome = parseFloat(formData.annualIncome)
+  let moneyOnHand = parseFloat(formData.moneyOnHand)
   let taxRate = parseFloat(formData.taxRate) / 100
   let monthlyRent = parseFloat(formData.monthlyRent)
   let monthlyUtility = parseFloat(formData.monthlyUtility)
@@ -51,6 +52,19 @@ export default function OutputPage({formData, setFormData}){
     { name: 'Monthly Expenses', value: monthlyExpensesValue},
     { name: 'Monthly Retirement', value: monthlyRetirementInvestment }
   ]
+
+  //get the range of months that will be graphed
+  let monthlyIncome = annualIncome/12
+  //0 = (mOH + (mI - mE))x
+  let monthRange = 
+  //for loop to calculate area chart of expenses vs income over a certain period of time
+  
+  for(let i=1;i<=monthRange;i++){
+    //calculates the amount saved every year using FV of annuity formula
+    let amountSaved = 
+    retirementSavingsValue.push({month: i, amountSaved});
+  }
+  
   return (
     <div style={{backgroundColor: "grey"}}>
       <div style={{maxWidth: "75%", paddingLeft: "25%"}}>
@@ -87,7 +101,24 @@ export default function OutputPage({formData, setFormData}){
             <Tooltip />
             <Bar fill="#8884d8" dataKey="value"/>
           </BarChart>
-        </div>
+      </div>
+      <AreaChart
+        width={500}
+        height={400}
+        data={}
+        margin={{
+          top: 10,
+          right: 30,
+          left: 0,
+          bottom: 0,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+      </AreaChart>
       <div style={{maxWidth: "75%", paddingLeft: "25%"}}>
         <h1>Retirement Information</h1>
       </div>

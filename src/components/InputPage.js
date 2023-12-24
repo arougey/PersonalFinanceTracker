@@ -1,38 +1,11 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 
 export default function InputPage({formData,setFormData}){
   //function to convert strings into ints
   //does all of the math once the submit button is pressed and sends it using states.
-  const handleSubmit = (event) => {
-    //error handling
-    event.preventDefault();
-    //turn all strings into float values
-    let annualIncome = parseFloat(formData.annualIncome)
-    let taxRate = parseFloat(formData.taxRate) / 100
-    let monthlyRent = parseFloat(formData.monthlyRent)
-    let monthlyUtility = parseFloat(formData.monthlyUtility)
-    let monthlyGroceries = parseFloat(formData.monthlyGroceries)
-    let monthlyVehicle = parseFloat(formData.monthlyVehicle)
-    let monthlySubscriptions = parseFloat(formData.monthlySubscriptions)
-    let monthlyMisc = parseFloat(formData.monthlyMisc)
-    let monthlyRetirementInvestment = parseFloat(formData.monthlyRetirementInvestment)
-    let retirementROI = parseFloat(formData.retirementROI) / 100
-    let studentLoanTotal = parseFloat(formData.studentLoanTotal)
-    let studentLoanInterest = parseFloat(formData.studentLoanInterest) / 100
-    let otherLoanTotal = parseFloat(formData.otherLoanTotal)
-    let otherLoanInterest = parseFloat(formData.otherLoanInterest) / 100
-    //calculate total monthly expenses
-    let monthlyExpensesValue = monthlyRent + monthlyUtility + monthlyGroceries + monthlyVehicle + monthlySubscriptions + monthlyMisc + monthlyRetirementInvestment;
-    //calculate savings until retirement
-    const dt1 = new Date(formData.dateOfBirth);
-    const dt2 = new Date(formData.dateOfRetirement);
-    const differenceInTime = dt2.getTime() - dt1.getTime();
-    const differenceInYears = differenceInTime / (1000 * 3600 * 24 * 30.437 * 12);
-    let yearsUntilRetirementValue = Math.ceil(Math.abs(differenceInYears));
-    setFormData({yearsUntilRetirement: yearsUntilRetirementValue})
-  }
+  
   //handles the onchange of every form control
   const handleChange = (event) => {
     const statevar = event.target.name;
@@ -45,7 +18,7 @@ export default function InputPage({formData,setFormData}){
     <div style={{backgroundColor: "grey"}}>
       <div style={{maxWidth: "75%", paddingLeft: "25%"}}>
         <h1>Personal Information</h1>
-        <Form onSubmit={handleSubmit}>
+        <Form>
         <Form.Group className="mb-3" controlId="formName">
           <Form.Label>Full Name</Form.Label>
           <Form.Control name="fullName" value={formData.fullName} type="text" placeholder="Enter Full Name" onChange={handleChange}/>
@@ -57,6 +30,10 @@ export default function InputPage({formData,setFormData}){
         <Form.Group className="mb-3" controlId="">
           <Form.Label>Annual Income</Form.Label>
           <Form.Control name="annualIncome" value={formData.annualIncome} type="number" placeholder="Enter Annual Income" onChange={handleChange}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="">
+          <Form.Label>Money On Hand</Form.Label>
+          <Form.Control name="moneyOnHand" value={formData.moneyOnHand} type="number" placeholder="Enter Money On Hand" onChange={handleChange}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="">
           <Form.Label>Tax Rate (whole number %)</Form.Label>
